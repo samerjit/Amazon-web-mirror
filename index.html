@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #0f1111;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(to bottom, #131921, #232f3e);
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            max-width: 600px;
+        }
+
+        .search-bar select {
+            padding: 12px;
+            border: none;
+            background: #e6e6e6;
+            border-radius: 4px 0 0 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            font-size: 16px;
+            border-radius: 0;
+        }
+
+        .search-bar button {
+            padding: 12px 20px;
+            background: #febd69;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #f3a847;
+        }
+
+        .account, .cart {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .account:hover, .cart:hover {
+            background: #3a4553;
+            border-radius: 4px;
+        }
+
+        .nav-bar {
+            background: #232f3e;
+            padding: 10px 20px;
+            border-bottom: 1px solid #3a4553;
+        }
+
+        .nav-bar ul {
+            display: flex;
+            list-style: none;
+            color: white;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-bar li {
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 8px;
+        }
+
+        .nav-bar li:hover {
+            color: #febd69;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-text {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-text h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .hero-text a {
+            color: #febd69;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 12px 24px;
+            background: #febd69;
+            color: #0f1111;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .hero-text a:hover {
+            background: #f3a847;
+        }
+
+        .category-filter {
+            margin: 20px 0;
+        }
+
+        .category-filter h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .category-filter ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter li {
+            padding: 10px 20px;
+            background: #e6e6e6;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .category-filter li:hover, .category-filter li.active {
+            background: #febd69;
+            color: #0f1111;
+        }
+
+        .product-section {
+            margin: 0 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1 1 280px;
+            max-width: 300px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #b12704;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            line-height: 1.4;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .product-card .price {
+            color: #b12704;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .product-card .original-price {
+            color: #666;
+            font-size: 14px;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .product-card .discount {
+            color: #008000;
+            font-size: 14px;
+        }
+
+        .product-card .rating {
+            font-size: 14px;
+        }
+
+        .product-card .btn {
+            padding: 12px;
+            background: #febd69;
+            color: #0f1111;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            transition: background 0.3s;
+            margin-top: auto;
+        }
+
+        .product-card .btn:hover {
+            background: #f3a847;
+        }
+
+        .trending-section, .deals-section {
+            margin: 0 0 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trending-section h2, .deals-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #febd69;
+            color: #0f1111;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+
+        .back-to-top:hover {
+            background: #f3a847;
+        }
+
+        .footer {
+            background: linear-gradient(to top, #131921, #232f3e);
+            color: white;
+            padding: 40px 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #febd69;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #3a4553;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-bottom a {
+            color: #ddd;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom a:hover {
+            color: #febd69;
+        }
+
+        .social-links {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #ddd;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #febd69;
+        }
+
+        @media (max-width: 1024px) {
+            .search-bar {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .hero-banner {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-banner {
+                height: 300px;
+            }
+
+            .hero-text h2 {
+                font-size: 24px;
+            }
+
+            .hero-text p {
+                font-size: 16px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .category-filter ul {
+                justify-content: center;
+            }
+
+            .product-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">
+                <img src="Amazon.logo.png" alt="Amazon Logo">
+            </div>
+            <div class="search-bar">
+                <select>
+                    <option>All Categories</option>
+                    <option>Electronics</option>
+                    <option>Books</option>
+                    <option>Fashion</option>
+                    <option>Home & Kitchen</option>
+                    <option>Beauty</option>
+                    <option>Sports</option>
+                </select>
+                <input type="text" placeholder="Search Amazon.in">
+                <button>Search</button>
+            </div>
+            <div class="account">
+                Hello, Sign in<br>Account & Lists
+            </div>
+            <div class="cart">
+                Cart
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <ul>
+            <li>All</li>
+            <li>Today's Deals</li>
+            <li>Customer Service</li>
+            <li>Registry</li>
+            <li>Gift Cards</li>
+            <li>Sell</li>
+            <li>Amazon Prime</li>
+            <li>Electronics</li>
+            <li>Fashion</li>
+            <li>Home & Kitchen</li>
+            <li>Books</li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="hero-banner" style="background-image: url('banner.jpg');">
+                <div class="hero-text">
+                    <h2>Great Summer Sale</h2>
+                    <p>Up to 70% Off on Electronics, Fashion & More</p>
+                    <a href="#">Shop Now</a>
+                </div>
+            </section>
+
+            <section class="category-filter">
+                <h3>Shop by Category</h3>
+                <ul>
+                    <li class="active" data-category="all">All</li>
+                    <li data-category="electronics">Electronics</li>
+                    <li data-category="fashion">Fashion</li>
+                    <li data-category="home">Home & Kitchen</li>
+                    <li data-category="books">Books</li>
+                    <li data-category="beauty">Beauty</li>
+                </ul>
+            </section>
+
+            <section class="product-section" data-category="all">
+                <div class="product-card" data-category="electronics">
+                    <span class="badge">Bestseller</span>
+                    <img src="nord ce3.jpg" alt="Smartphone">
+                    <h3>OnePlus Nord CE 3 Lite 5G (8GB RAM, 128GB Storage)</h3>
+                    <p class="price">₹18,999 <span class="original-price">₹20,999</span></p>
+                    <p class="discount">10% Off</p>
+                    <p class="rating">4.2/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+                <div class="product-card" data-category="fashion">
+                    <span class="badge">Top Rated</span>
+                    <img src="man shirt.jpg" alt="Fashion">
+                    <h3>Allen Solly Men's Regular Fit Shirt</h3>
+                    <p class="price">₹1,099 <span class="original-price">₹1,999</span></p>
+                    <p class="discount">45% Off</p>
+                    <p class="rating">4.8/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+                <div class="product-card" data-category="home">
+                    <span class="badge">New Arrival</span>
+                    <img src="induction.jpeg" alt="Home">
+                    <h3>Prestige Induction Cooktop</h3>
+                    <p class="price">₹2,799 <span class="original-price">₹4,295</span></p>
+                    <p class="discount">35% Off</p>
+                    <p class="rating">4.3/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+                <div class="product-card" data-category="books">
+                    <span class="badge">Best Value</span>
+                    <img src="book.jpeg" alt="Books">
+                    <h3>The Psychology of Money</h3>
+                    <p class="price">₹399 <span class="original-price">₹599</span></p>
+                    <p class="discount">33% Off</p>
+                    <p class="rating">4.7/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+                <div class="product-card" data-category="beauty">
+                    <span class="badge">Popular</span>
+                    <img src="perfume.jpeg" alt="Perfume">
+                    <h3>Nykaa Luxe Perfume</h3>
+                    <p class="price">₹1,499 <span class="original-price">₹2,199</span></p>
+                    <p class="discount">32% Off</p>
+                    <p class="rating">4.5/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+                <div class="product-card" data-category="electronics">
+                    <span class="badge">Hot Deal</span>
+                    <img src="taablet.jpeg" alt="Tablet">
+                    <h3>Samsung Galaxy Tab A8</h3>
+                    <p class="price">₹12,999 <span class="original-price">₹18,999</span></p>
+                    <p class="discount">31% Off</p>
+                    <p class="rating">4.4/5</p>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </section>
+
+            <section class="trending-section">
+                <h2>Trending Now</h2>
+                <div class="product-section">
+                    <div class="product-card" data-category="electronics">
+                        <span class="badge">Hot Pick</span>
+                        <img src="apple watch.jpeg" alt="Smartwatch">
+                        <h3>Apple Watch Series 9</h3>
+                        <p class="price">₹41,999 <span class="original-price">₹49,900</span></p>
+                        <p class="discount">16% Off</p>
+                        <p class="rating">4.9/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="beauty">
+                        <span class="badge">Trending</span>
+                        <img src="lakmee.jpeg" alt="Beauty">
+                        <h3>Lakmé Absolute Skin Natural Mousse</h3>
+                        <p class="price">₹599 <span class="original-price">₹850</span></p>
+                        <p class="discount">29% Off</p>
+                        <p class="rating">4.4/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="electronics">
+                        <span class="badge">Popular</span>
+                        <img src="jbl earbuds.webp" alt="Earphones">
+                        <h3>JBL Tune 230NC TWS Earbuds</h3>
+                        <p class="price">₹5,999 <span class="original-price">₹7,999</span></p>
+                        <p class="discount">25% Off</p>
+                        <p class="rating">4.3/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="fashion">
+                        <span class="badge">New Arrival</span>
+                        <img src="shoes.jpeg" alt="Sneakers">
+                        <h3>Adidas Men's Sneakers</h3>
+                        <p class="price">₹2,799 <span class="original-price">₹4,999</span></p>
+                        <p class="discount">44% Off</p>
+                        <p class="rating">4.6/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="deals-section">
+                <h2>Deals of the Day</h2>
+                <div class="product-section">
+                    <div class="product-card" data-category="electronics">
+                        <span class="badge">Limited Offer</span>
+                        <img src="headphones.jpeg" alt="Headphones">
+                        <h3>boAt Rockerz 450 Wireless Headphones</h3>
+                        <p class="price">₹1,499 <span class="original-price">₹3,990</span></p>
+                        <p class="discount">62% Off</p>
+                        <p class="rating">4.1/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="electronics">
+                        <span class="badge">Hot Deal</span>
+                        <img src="laptop.jpeg" alt="Laptop">
+                        <h3>ASUS TUF Gaming Laptop</h3>
+                        <p class="price">₹59,990 <span class="original-price">₹82,990</span></p>
+                        <p class="discount">28% Off</p>
+                        <p class="rating">4.6/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="electronics">
+                        <span class="badge">Deal of the Day</span>
+                        <img src="Smartwatch.webp" alt="Watch">
+                        <h3>Fire-Boltt Ninja Smartwatch</h3>
+                        <p class="price">₹2,999 <span class="original-price">₹7,999</span></p>
+                        <p class="discount">63% Off</p>
+                        <p class="rating">4.4/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                    <div class="product-card" data-category="home">
+                        <span class="badge">Best Value</span>
+                        <img src="Fryer.jpeg" alt="Air Fryer">
+                        <h3>Philips Digital Air Fryer</h3>
+                        <p class="price">₹6,999 <span class="original-price">₹9,995</span></p>
+                        <p class="discount">30% Off</p>
+                        <p class="rating">4.5/5</p>
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <button class="back-to-top">Top</button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Get to Know Us</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Releases</a></li>
+                    <li><a href="#">Amazon Science</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect with Us</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Make Money with Us</h4>
+                <ul>
+                    <li><a href="#">Sell on Amazon</a></li>
+                    <li><a href="#">Sell under Amazon Accelerator</a></li>
+                    <li><a href="#">Affiliate Program</a></li>
+                    <li><a href="#">Advertise Your Products</a></li>
+                    <li><a href="#">Amazon Global Selling</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Let Us Help You</h4>
+                <ul>
+                    <li><a href="#">COVID-19 and Amazon</a></li>
+                    <li><a href="#">Your Account</a></li>
+                    <li><a href="#">Returns Centre</a></li>
+                    <li><a href="#">100% Purchase Protection</a></li>
+                    <li><a href="#">Amazon App Download</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+            <p>
+                <a href="#">Conditions of Use</a> |
+                <a href="#">Privacy Notice</a> |
+                <a href="#">Interest-Based Ads</a>
+            </p>
+            <p>© 1996-2025, Amazon.com, Inc. or its affiliates</p>
+        </div>
+    </footer>
+</body>
+</html>
